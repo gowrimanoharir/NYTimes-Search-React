@@ -37,9 +37,36 @@ module.exports = function(app, db){
                 res.json(data)
             }
         })
+    })  
+    
+    //Post route to be able to save an article selected by user
+    app.post('/save', function(req,res){
+        var newArticle = new Article(req.body)
+            newArticle.save(function(err, data){
+            if(err){
+                console.log(err)
+            }
+            else{
+                console.log(data)
+            }
+        })
+    })
+    
+    //Post route to be able to delete an article saved previously by user 
+    app.post('/delete/:id', function(req,res){
+        Article.find({"_id":req.params.id}).remove(function(err, data){
+            if(err){
+                console.log(err)
+            }
+            else {
+                res.redirect("/saved")
+            }
+            
+        })
+        
     })    
 
-    
+
 
 }
 

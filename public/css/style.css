@@ -1,0 +1,25 @@
+.wrapper{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.btn{
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid transparent;
+}
+
+.clr-white{
+    color: #fff
+}
+
+.clr-blk{
+    color: #000
+}
+
+
+

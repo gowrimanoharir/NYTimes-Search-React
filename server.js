@@ -1,59 +1,41 @@
-const express = require("express")
-const bodyParser = require("body-parser")
+const express = require("express");
+const app = express();
+const appRoutes = require("./routes")
 const logger = require("morgan")
 const mongoose = require("mongoose")
+const bodyParser = require("body-parser");
 
-mongoose.Promise = Promise
+const PORT = process.env.PORT || 3001;
 
-const port = process.env.PORT || 3000;
+// Configure body parser for AJAX requests
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-const app = express()
+// Serve up static assets (usually on heroku)
+//if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+//}
 
 app.use(logger("dev"));
-app.use(bodyParser.urlencoded({
-    extended: false
-}))
-
-app.use(express.static("public"))
+app.use(appRoutes)
 
 // Database configuration for mongoose
 // db: newsscrape
 
 const local_db = "mongodb://localhost/nytreact"
 
-//check if HEROKU then use environment variable to connect to db else use local db
-if(process.env.MONGODB_URI){
-    mongoose.connect(process.env.MONGODB_URI, function(err){
-        if(err){
-            console.log(err)
-        }
-        else{
-            console.log("Mongoose connection successful.");
-        }
-    });
-}
-else{
-    mongoose.connect(local_db, function(err){
-        if(err){
-            console.log(err)
-        }
-        else{
-            console.log("Mongoose connection successful.");
-        }
-    });
-}
-// Hook mongoose connection to db
-const db = mongoose.connection;
-
-// Log any mongoose errors
-db.on("error", function(error) {
-  console.log("Mongoose Error: ", error);
-});
-
-require("./routes/routing")(app, db);
+// Set up promises with mongoose
+mongoose.Promise = global.Promise;
+// Connect to the Mongo DB
+mongoose.connect(
+  process.env.MONGODB_URI || local_db,
+  {
+    useMongoClient: true
+  }
+);
 
 
-// Listen on port 3000
-app.listen(port, function() {
-    console.log(`Listening on PORT ${port}`);
+
+app.listen(PORT, function() {
+  console.log(`🌎 ==> Server now on port ${PORT}!`);
 });

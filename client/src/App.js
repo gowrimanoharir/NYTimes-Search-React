@@ -9,9 +9,7 @@ class App extends Component {
   }
 
   componentWillMount = () => {
-    API.getSavedArticles()
-      .then(res => console.log(res))
-
+    console.log(API.getArticles())
   }
 
   render() {

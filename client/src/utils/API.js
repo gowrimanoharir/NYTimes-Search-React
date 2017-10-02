@@ -3,10 +3,10 @@ import axios from "axios"
 const authKey = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931";
 
 export default {
-    getArticles: () => {
+    getArticles: (query) => {
         console.log("in search")
         let articles = [];
-        let queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=trump&begin_date=20170101&end_date=20170901";
+        let queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q="+query;
         axios.get(queryURLBase)
             .then((response) => {
                 let results = response.data.response.docs;

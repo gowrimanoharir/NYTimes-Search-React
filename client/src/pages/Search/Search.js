@@ -42,6 +42,10 @@ class Search extends Component {
     }
   }
 
+  handleClear = () => {
+    this.setState({ articles: [], searchTerm: "", startYear: "", endYear: "" })
+  }
+
   render() {
     const arrArticles = this.state.articles
     return (
@@ -82,8 +86,7 @@ class Search extends Component {
                 </FormBtn>    
 
                 <FormBtn
-                  disabled={!(this.state.searchTerm && this.state.startYear && this.state.endYear)}
-                  onClick={this.handleFormSubmit}
+                  onClick={this.handleClear}
                 >
                     Clear
                 </FormBtn>                            

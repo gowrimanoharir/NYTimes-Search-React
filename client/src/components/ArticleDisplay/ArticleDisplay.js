@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Panel, PanelHeader, PanelBody } from "../Panel";
 import {List, ListItem} from "../List"
-import {Button} from "../Button"
+import {Button, ViewButton} from "../Button"
 import API from "../../utils/API"
 
 
@@ -28,7 +28,7 @@ render(){
                         <span>{article.title} </span>
                         <span>
                             <a href={article.link} target="_blank">
-                              <Button BtnClass="btn-danger">View Article</Button>
+                              <ViewButton BtnClass="btn-danger">View Article</ViewButton>
                             </a>
                             <Button id={index} saveArticle={(id) => this.handleSave(id)} BtnClass="btn-primary">Save</Button>                            
                         </span>

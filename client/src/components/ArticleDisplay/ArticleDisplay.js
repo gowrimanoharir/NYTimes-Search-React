@@ -1,29 +1,44 @@
-import React from "react"
+import React, { Component } from 'react';
 import { Panel, PanelHeader, PanelBody } from "../Panel";
 import {List, ListItem} from "../List"
 import {Button} from "../Button"
+import API from "../../utils/API"
 
-export const ArticleDisplay = props => {
 
-    console.log(props)
+class ArticleDisplay extends Component {
+
+handleSave = (id) =>{
+    API.saveArticle(this.props.articles[id])
+   .catch(err => console.log(err))
+}
+
+render(){  
+    console.log(this.props)
     return(
     <Panel>
         <PanelHeader>
             Search Results
         </PanelHeader> 
         <PanelBody>
-        {props.articles ? (
+        {this.props.articles.length ? (
               <List>
-                {props.articles.map((article, index) => (
+                {this.props.articles.map((article, index) => (
                   <ListItem key={index}>
-                      <strong>
-                        {article.title} 
-                      </strong>
+                      <h3>
+                        <span>{article.title} </span>
+                        <span>
+                            <a href={article.link} target="_blank">
+                              <Button BtnClass="btn-danger">View Article</Button>
+                            </a>
+                            <Button id={index} saveArticle={(id) => this.handleSave(id)} BtnClass="btn-primary">Save</Button>                            
+                        </span>
+                      </h3>
                       <p>
                           {article.excerpt}
                       </p>  
-                    <Button>Save</Button>
-                    <Button>View Article</Button>
+                      <p>
+                          Published on: {article.date}
+                      </p>  
                   </ListItem>
                 ))}
               </List>
@@ -33,4 +48,7 @@ export const ArticleDisplay = props => {
         </PanelBody>
     </Panel>
     )
+  }
 }
+
+export default ArticleDisplay;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import API from "../../utils/API"
-import { Input, FormWrapper } from "../../components/Form";
-import { Button } from "../../components/Button";
-import { ArticleDisplay } from "../../components/ArticleDisplay";
+import { Input, FormWrapper, FormBtn } from "../../components/Form";
+import ArticleDisplay from "../../components/ArticleDisplay";
 
 class Search extends Component {
   state = {
@@ -23,14 +22,28 @@ class Search extends Component {
     event.preventDefault()
     if(this.state.searchTerm && this.state.startYear && this.state.endYear){
       let query = `${this.state.searchTerm}&begin_date=${this.state.startYear}0101&end_date=${this.state.endYear}1231`
-      let newArticles = API.getArticles(query)
-      this.setState({ articles: newArticles, searchTerm: "", startYear: "", endYear: "" })
-      console.log(this.state.articles)
-      
+      API.getArticles(query)
+      .then((response) => {
+          let results = response.data.response.docs;
+          console.log(results.length)
+          let newArticles = results.map((item, i) => (
+              {
+                  title: item.headline.main,
+                  excerpt: item.snippet,
+                  link: item.web_url,
+                  date: item.pub_date
+              }
+          ))
+          this.setState({ articles: newArticles, searchTerm: "", startYear: "", endYear: "" })
+          console.log(this.state.articles)
+          
+      })      
+   
     }
   }
 
   render() {
+    const arrArticles = this.state.articles
     return (
           <div>
             <FormWrapper>
@@ -61,22 +74,22 @@ class Search extends Component {
                   onChange={this.handleInputChange}
                   id="endYear"
                   placeholder="Enter end year (required)"/>  
-                <Button
+                <FormBtn
                   disabled={!(this.state.searchTerm && this.state.startYear && this.state.endYear)}
                   onClick={this.handleFormSubmit}
                 >
                     Search
-                </Button>    
+                </FormBtn>    
 
-                <Button
+                <FormBtn
                   disabled={!(this.state.searchTerm && this.state.startYear && this.state.endYear)}
                   onClick={this.handleFormSubmit}
                 >
                     Clear
-                </Button>                            
+                </FormBtn>                            
 
             </FormWrapper>
-            <ArticleDisplay articles={this.state.articles}/>
+            <ArticleDisplay articles={arrArticles}/>
            </div> 
     );
   }

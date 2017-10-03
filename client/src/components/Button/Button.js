@@ -2,6 +2,6 @@ import React from "react";
 import "./Button.css";
 
 export const Button = props =>
-  <button {...props} className="btn btn-danger search-btn">
+  <button onClick={() => props.saveArticle(props.id)} className={`btn search-btn ${props.BtnClass}`}>
     {props.children}
   </button>;

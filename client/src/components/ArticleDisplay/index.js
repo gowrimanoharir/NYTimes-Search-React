@@ -1,1 +1,1 @@
-export * from "./ArticleDisplay";
+export { default } from "./ArticleDisplay.js";

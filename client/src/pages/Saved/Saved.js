@@ -24,7 +24,6 @@ componentWillMount = () =>{
 savedArticleDisplay = () => {
     API.getSavedArticles()
     .then(res => {
-        console.log(res)
         this.setState({savedArticles: res.data})
     })
    .catch(err => console.log(err))

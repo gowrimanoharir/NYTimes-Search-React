@@ -13,7 +13,6 @@ handleSave = (id) =>{
 }
 
 render(){  
-    console.log(this.props)
     return(
     <Panel>
         <PanelHeader>

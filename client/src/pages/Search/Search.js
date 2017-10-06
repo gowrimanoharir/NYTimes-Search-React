@@ -14,18 +14,18 @@ class Search extends Component {
   handleInputChange = event => {
     const {id, value} = event.target;
     this.setState({
-      [id]: value.trim()
+      [id]: value
     })
   }
 
   handleFormSubmit = event => {
     event.preventDefault()
     if(this.state.searchTerm && this.state.startYear && this.state.endYear){
-      let query = `${this.state.searchTerm}&begin_date=${this.state.startYear}0101&end_date=${this.state.endYear}1231`
+      let searchterm = this.state.searchTerm.trim()
+      let query = `${searchterm}&begin_date=${this.state.startYear}0101&end_date=${this.state.endYear}1231`
       API.getArticles(query)
       .then((response) => {
           let results = response.data.response.docs;
-          console.log(results.length)
           let newArticles = results.map((item, i) => (
               {
                   title: item.headline.main,
@@ -35,10 +35,7 @@ class Search extends Component {
               }
           ))
           this.setState({ articles: newArticles, searchTerm: "", startYear: "", endYear: "" })
-          console.log(this.state.articles)
-          
-      })      
-   
+      })         
     }
   }
 

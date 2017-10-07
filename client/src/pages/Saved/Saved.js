@@ -4,23 +4,28 @@ import {List, ListItem} from "../../components/List"
 import {Button, ViewButton} from "../../components/Button"
 import API from "../../utils/API"
 
+//Saved Page component to display the form for search function 
 
 class Saved extends Component {
 
+//initialize state to have empty array save the data from database api
 state = {
     savedArticles: []
 }
 
+//function to delete the article from db once the user clicks delete in saved page
 handleDelete = (id) =>{
     API.deleteArticle(id)
     .then(res => this.savedArticleDisplay())
    .catch(err => console.log(err))
 }
 
+//lifecycle function to invoke the display of saved articles on component load
 componentWillMount = () =>{
     this.savedArticleDisplay()
 }
 
+//function to get all the saved articles from db and set state with results
 savedArticleDisplay = () => {
     API.getSavedArticles()
     .then(res => {
@@ -36,6 +41,7 @@ render(){
             Saved Articles
         </PanelHeader> 
         <PanelBody>
+        {/*If there are articles in the api results then loop through the items and display item in a list else display a message*/}            
         {this.state.savedArticles.length ? (
               <List>
                 {this.state.savedArticles.map((article, index) => (
@@ -59,7 +65,7 @@ render(){
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
+              <h3>No Results to Display</h3> 
             )}            
         </PanelBody>
     </Panel>

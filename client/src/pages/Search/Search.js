@@ -3,7 +3,11 @@ import API from "../../utils/API"
 import { Input, FormWrapper, FormBtn } from "../../components/Form";
 import ArticleDisplay from "../../components/ArticleDisplay";
 
+//Search Page component to display the form for search function and results 
+
 class Search extends Component {
+
+  //define state to save the result data from NYT api and search input values
   state = {
     articles: [],
     searchTerm: "",
@@ -11,6 +15,7 @@ class Search extends Component {
     endYear: ""
   }
 
+  //function to track changes to the input fields of Search form
   handleInputChange = event => {
     const {id, value} = event.target;
     this.setState({
@@ -18,6 +23,7 @@ class Search extends Component {
     })
   }
 
+  //function to call the NYT API on submit of search criteria and update the the state with result data
   handleFormSubmit = event => {
     event.preventDefault()
     if(this.state.searchTerm && this.state.startYear && this.state.endYear){
@@ -39,10 +45,12 @@ class Search extends Component {
     }
   }
 
+  //function to clear the input fields & search results on click on clear
   handleClear = () => {
     this.setState({ articles: [], searchTerm: "", startYear: "", endYear: "" })
   }
 
+  //function to remove the article row item from display once the user clicks save in search page
   handleRemoveArticle = (id) => {
     let newList = this.state.articles
     this.setState({articles: newList.filter((_, i) => i!==id)})
@@ -52,16 +60,18 @@ class Search extends Component {
     const arrArticles = this.state.articles
     return (
           <div>
+
+            {/*Search form module to render a form calling individual components and also has the function to handle input changes*/}
             <FormWrapper>
                 <h4>
                   Search Term
                 </h4>
-                <Input 
-                  type="text"
-                  value={this.state.searchTerm}
-                  onChange={this.handleInputChange}
-                  id="searchTerm"
-                  placeholder="Enter your search term (required)"/>  
+                  <Input 
+                    type="text"
+                    value={this.state.searchTerm}
+                    onChange={this.handleInputChange}
+                    id="searchTerm"
+                    placeholder="Enter your search term (required)"/>  
                 <h4>
                   Start Year
                 </h4>
@@ -80,6 +90,8 @@ class Search extends Component {
                   onChange={this.handleInputChange}
                   id="endYear"
                   placeholder="Enter end year (required)"/>  
+
+                {/*Search button render and calls submit function to call NYT API on click*/}  
                 <FormBtn
                   disabled={!(this.state.searchTerm && this.state.startYear && this.state.endYear)}
                   onClick={this.handleFormSubmit}
@@ -94,6 +106,9 @@ class Search extends Component {
                 </FormBtn>                            
 
             </FormWrapper>
+
+            {/*Send the articles data to Article Display component to render the results list, 
+            also pass removearticle function as props so it can be invoked from that module when as article is saved*/}
             <ArticleDisplay articles={arrArticles} removeArticle={(id) => this.handleRemoveArticle(id)}/>
            </div> 
     );

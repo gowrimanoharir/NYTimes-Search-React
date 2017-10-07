@@ -2,6 +2,7 @@ const path = require("path")
 const router = require("express").Router()
 const apiRoutes = require("./api")
 
+//set the head route of api
 router.use("/api", apiRoutes)
 
 router.use(function (req, res){

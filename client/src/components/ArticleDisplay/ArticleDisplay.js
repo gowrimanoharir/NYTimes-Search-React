@@ -9,6 +9,7 @@ class ArticleDisplay extends Component {
 
 handleSave = (id) =>{
     API.saveArticle(this.props.articles[id])
+    .then( res => this.props.removeArticle(id))
    .catch(err => console.log(err))
 }
 
@@ -27,9 +28,9 @@ render(){
                         <span>{article.title} </span>
                         <span>
                             <a href={article.link} target="_blank">
-                              <ViewButton BtnClass="btn-danger">View Article</ViewButton>
+                              <ViewButton BtnClass="btn-info">View Article</ViewButton>
                             </a>
-                            <Button id={index} saveArticle={(id) => this.handleSave(id)} BtnClass="btn-primary">Save</Button>                            
+                            <Button id={index} saveArticle={(id) => this.handleSave(id)} BtnClass="btn-success">Save</Button>                            
                         </span>
                       </h3>
                       <p>

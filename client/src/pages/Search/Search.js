@@ -43,6 +43,11 @@ class Search extends Component {
     this.setState({ articles: [], searchTerm: "", startYear: "", endYear: "" })
   }
 
+  handleRemoveArticle = (id) => {
+    let newList = this.state.articles
+    this.setState({articles: newList.filter((_, i) => i!==id)})
+  }
+
   render() {
     const arrArticles = this.state.articles
     return (
@@ -89,7 +94,7 @@ class Search extends Component {
                 </FormBtn>                            
 
             </FormWrapper>
-            <ArticleDisplay articles={arrArticles}/>
+            <ArticleDisplay articles={arrArticles} removeArticle={(id) => this.handleRemoveArticle(id)}/>
            </div> 
     );
   }

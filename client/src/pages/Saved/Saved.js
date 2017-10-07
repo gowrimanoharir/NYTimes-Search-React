@@ -44,9 +44,9 @@ render(){
                         <span>{article.title} </span>
                         <span>
                             <a href={article.link} target="_blank">
-                              <ViewButton BtnClass="btn-danger">View Article</ViewButton>
+                              <ViewButton BtnClass="btn-info">View Article</ViewButton>
                             </a>                            
-                            <Button id={article._id} deleteArticle={(id) => this.handleDelete(id)} BtnClass="btn-primary">Delete</Button>                            
+                            <Button id={article._id} deleteArticle={(id) => this.handleDelete(id)} BtnClass="btn-danger">Delete</Button>                            
                         </span>
                       </h3>
                       <p>

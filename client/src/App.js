@@ -23,7 +23,7 @@ const App = () =>
         <Route exact path="/saved" component={Saved} />
 
         {/*all other paths should go to error page*/}
-        <Route component={Search} />
+        <Route component={NoMatch} />
       </Switch>
     </div>
   </Router>;
